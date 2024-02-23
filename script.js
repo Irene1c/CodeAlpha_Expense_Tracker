@@ -24,6 +24,19 @@ document.addEventListener('DOMContentLoaded', () => {
     amountInput.value = '';
   }
 
+  // Function to validate user inputs
+  function validateInputs () {
+    if (dateInput.value === '' ||
+         expenseInput.value === '' ||
+         categoryInput.value === '' ||
+         amountInput.value <= 0 ||
+         isNaN(amountInput.value)) {
+      alert('Please Enter valid inputs');
+      return false;
+    }
+    return true;
+  }
+
   // Function to display expenses
   function display () {
     // Clear available data
@@ -57,24 +70,27 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to add an expense
   function addExpense () {
-    const dateValue = dateInput.value.trim();
-    const expenseValue = expenseInput.value.trim();
-    const categoryValue = categoryInput.value.trim();
-    const amountValue = Number(amountInput.value);
+    if (validateInputs() === true) {
+      const dateValue = dateInput.value.trim();
+      const expenseValue = expenseInput.value.trim();
+      const categoryValue = categoryInput.value.trim();
+      const amountValue = Number(amountInput.value);
 
-    // Expense object
-    const expense = {
-      date: dateValue,
-      name: expenseValue,
-      category: categoryValue,
-      amount: amountValue
-    };
+      // Expense object
+      const expense = {
+        date: dateValue,
+        name: expenseValue,
+        category: categoryValue,
+        amount: amountValue
+      };
 
-    // Update expensesList
-    expensesList.push(expense);
-    console.log(expense);
-    clearInputFields();
-    display();
+      // Update expensesList
+      expensesList.push(expense);
+      console.log(expense);
+
+      clearInputFields();
+      display();
+    }
   }
 
   // Event listener for adding an expense
