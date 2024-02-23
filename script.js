@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Declaring variables
   const expensesList = [];
-  const total = 0;
+  let total = 0;
 
   // Function to clear input fields
   function clearInputFields () {
@@ -39,6 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Function to display expenses
   function display () {
+    // calculate and display total expenses
+    total = expensesList.reduce((acc, expense) => acc + expense.amount, 0);
+    totalExpenses.innerHTML = total.toLocaleString();
+
     // Clear available data
     expensesTable.innerHTML = '';
 
