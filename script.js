@@ -16,6 +16,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const expensesList = [];
   const total = 0;
 
+  // Function to clear input fields
+  function clearInputFields () {
+    dateInput.value = '';
+    expenseInput.value = '';
+    categoryInput.value = '';
+    amountInput.value = '';
+  }
+
   // Function to display expenses
   function display () {
     // Clear available data
@@ -65,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Update expensesList
     expensesList.push(expense);
     console.log(expense);
+    clearInputFields();
     display();
   }
 
