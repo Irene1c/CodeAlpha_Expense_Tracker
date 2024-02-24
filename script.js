@@ -37,6 +37,12 @@ document.addEventListener('DOMContentLoaded', () => {
     return true;
   }
 
+  // Function to save data to local storage
+  function saveExpenses () {
+    localStorage.setItem('Expenses', JSON.stringify(expensesList));
+    localStorage.setItem('Totalexpenses', JSON.stringify(total));
+  }
+
   // Function to display expenses
   function display () {
     // calculate and display total expenses
@@ -70,6 +76,8 @@ document.addEventListener('DOMContentLoaded', () => {
         <p style="font-weight:bold; font-size: 20px;">No expenses added!</p>
       `;
     }
+
+    saveExpenses();
   }
 
   // Function to add an expense
