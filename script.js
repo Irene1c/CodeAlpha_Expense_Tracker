@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Declaring variables
   let expensesList = [];
   let total = 0;
+  let editIdx = -1;
 
   // Function to clear input fields
   function clearInputFields () {
@@ -43,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
     localStorage.setItem('Totalexpenses', JSON.stringify(total));
   }
 
-  //function to get/read data from local storage
+  // Function to get/read data from local storage
   function getExpenses () {
     const storedExpenses = localStorage.getItem('Expenses');
     const Total = localStorage.getItem('Totalexpenses');
@@ -88,6 +89,27 @@ document.addEventListener('DOMContentLoaded', () => {
     saveExpenses();
   }
 
+  // Function to edit an expense
+  function editExpense (idx) {
+    editIdx = idx;
+
+    // Populate form fields
+    dateInput.value = expensesList[idx].date;
+    expenseInput.value = expensesList[idx].name;
+    categoryInput.value = expensesList[idx].category;
+    amountInput.value = expensesList[idx].amount;
+
+    cancelEditBtn.style.display = 'block';
+  }
+
+  // Function to cancel edit
+  function cancelEdit () {
+    // Reset edit index
+    editIdx = -1;
+    clearInputFields();
+    cancelEditBtn.style.display = 'none';
+  }
+
   // Function to add an expense
   function addExpense () {
     if (validateInputs() === true) {
@@ -104,9 +126,17 @@ document.addEventListener('DOMContentLoaded', () => {
         amount: amountValue
       };
 
-      // Update expensesList
-      expensesList.push(expense);
+      if (editIdx !== -1) {
+        expensesList[editIdx] = expense;
+      } else {
+        // Update expensesList
+        expensesList.push(expense);
+      }
       console.log(expense);
+
+      // Reset edit index
+      editIdx = -1;
+      cancelEditBtn.style.display = 'none';
 
       clearInputFields();
       display();
@@ -119,21 +149,25 @@ document.addEventListener('DOMContentLoaded', () => {
     display();
   }
 
+  // Event listener to cancel edit
+  cancelEditBtn.addEventListener('click', cancelEdit);
+
   // Event Delegation Delete and Edit
   expensesTable.addEventListener('click', (event) => {
     const expenseIdx = event.target.getAttribute('data-id');
     if (event.target.tagName === 'BUTTON' && event.target.textContent === 'Delete') {
       deleteExpense(Number(expenseIdx));
       console.log(`Deleting expense at index ${expenseIdx}`);
-    //} else if (event.target.tagName === 'BUTTON' && event.target.textContent === 'Edit') {
-     // editExpense(Number(expenseIdx));
-      //console.log(`Editing expense at index ${expenseIdx}`);
+    } else if (event.target.tagName === 'BUTTON' && event.target.textContent === 'Edit') {
+      editExpense(Number(expenseIdx));
+      console.log(`Editing expense at index ${expenseIdx}`);
     }
   });
 
   // Event listener for adding an expense
   addExpenseBtn.addEventListener('click', addExpense);
 
+  cancelEditBtn.style.display = 'none';
   getExpenses();
   display();
 });
