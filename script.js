@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const expensesTable = document.getElementById('expenses-table');
 
   // Declaring variables
-  const expensesList = [];
+  let expensesList = [];
   let total = 0;
 
   // Function to clear input fields
@@ -41,6 +41,14 @@ document.addEventListener('DOMContentLoaded', () => {
   function saveExpenses () {
     localStorage.setItem('Expenses', JSON.stringify(expensesList));
     localStorage.setItem('Totalexpenses', JSON.stringify(total));
+  }
+
+  //function to get/read data from local storage
+  function getExpenses () {
+    const storedExpenses = localStorage.getItem('Expenses');
+    const Total = localStorage.getItem('Totalexpenses');
+    expensesList = storedExpenses ? JSON.parse(storedExpenses) : [];
+    total = Total ? JSON.parse(Total) : 0;
   }
 
   // Function to display expenses
@@ -108,5 +116,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // Event listener for adding an expense
   addExpenseBtn.addEventListener('click', addExpense);
 
+  getExpenses();
   display();
 });
