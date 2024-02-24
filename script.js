@@ -70,10 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${e.amount.toLocaleString()}</td>
             <td id="actions">
               <div>
-                <button type="button" class="btn btn-warning btn-sm">Edit</button>
+                <button type="button" data-id="${index}" class="btn btn-warning btn-sm">Edit</button>
               </div>
               <div>
-                <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                <button type="button" data-id="${index}" class="btn btn-danger btn-sm">Delete</button>
               </div>
             </td>
           </tr>
@@ -112,6 +112,24 @@ document.addEventListener('DOMContentLoaded', () => {
       display();
     }
   }
+
+  // function to delete an expense
+  function deleteExpense (idx) {
+    expensesList = expensesList.filter((expense, index) => index !== idx);
+    display();
+  }
+
+  // Event Delegation Delete and Edit
+  expensesTable.addEventListener('click', (event) => {
+    const expenseIdx = event.target.getAttribute('data-id');
+    if (event.target.tagName === 'BUTTON' && event.target.textContent === 'Delete') {
+      deleteExpense(Number(expenseIdx));
+      console.log(`Deleting expense at index ${expenseIdx}`);
+    //} else if (event.target.tagName === 'BUTTON' && event.target.textContent === 'Edit') {
+     // editExpense(Number(expenseIdx));
+      //console.log(`Editing expense at index ${expenseIdx}`);
+    }
+  });
 
   // Event listener for adding an expense
   addExpenseBtn.addEventListener('click', addExpense);
