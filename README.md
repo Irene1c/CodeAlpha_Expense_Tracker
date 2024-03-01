@@ -16,7 +16,7 @@ Expense Tracker web application designed to help users manage their expenses eff
 - **Bootstrap**: Utilized for responsive design and pre-styled components to enhance the user interface.
 
 ## Deployment
-The Expense Tracker application is hosted on GitHub Pages. You can access it here <!-- https://irene1c.github.io/CodeAlpha_Expense_Tracker/ -->
+The Expense Tracker application is hosted on GitHub Pages. You can access it [here](https://irene1c.github.io/CodeAlpha_Expense_Tracker/).
 
 ## Internship
 
